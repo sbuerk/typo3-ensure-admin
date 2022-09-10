@@ -17,7 +17,11 @@ declare(strict_types=1);
 
 namespace SBUERK\EnsureAdmin\Services;
 
+use Doctrine\DBAL\Driver\ResultStatement;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AdminPasswordService
 {
@@ -26,9 +30,15 @@ class AdminPasswordService
      */
     protected $hashInstance;
 
-    public function __construct(PasswordHashInterface $hashInstance)
+    /**
+     * @var Connection
+     */
+    protected $connection;
+
+    public function __construct(PasswordHashInterface $hashInstance, Connection $connection)
     {
         $this->hashInstance = $hashInstance;
+        $this->connection = $connection;
     }
 
     public function getHashedPassword(string $plainPassword): string
@@ -39,5 +49,73 @@ class AdminPasswordService
     public function checkPassword(string $plainPassword, string $hashedPassword): bool
     {
         return $this->hashInstance->checkPassword($plainPassword, $hashedPassword);
+    }
+
+    public function adminExists(string $username): bool
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $result = $queryBuilder
+            ->count('*')
+            ->from('be_users')
+            ->where(
+                $queryBuilder->expr()->eq('username', $queryBuilder->createNamedParameter($username))
+            )
+            ->execute();
+        if ($result instanceof ResultStatement) {
+            return (int)$result->fetchColumn() > 0; // @phpstan-ignore-line
+        }
+        return $result > 0;
+    }
+
+    public function ensureAdminUser(bool $force, string $username, string $password, string $email, string $firstname, string $lastname): bool
+    {
+        $adminUserFields = [
+            'username' => $username,
+            'password' => $password,
+            'email' => GeneralUtility::validEmail($email) ? $email : '',
+            'admin' => 1,
+            'tstamp' => $GLOBALS['EXEC_TIME'],
+            'crdate' => $GLOBALS['EXEC_TIME'],
+            'disable' => 0,
+            'deleted' => 0,
+        ];
+        if ($this->adminExists($username)) {
+            if (!$force) {
+                throw new \InvalidArgumentException('Cannot updated existing admin. You can enforce updating with --force.', 1662854882);
+            }
+            $adminUserUid = $this->getExistingAdminUserId($username);
+            if ($adminUserUid > 0) {
+                $this->connection->update(
+                    'be_users',
+                    $adminUserFields,
+                    ['uid' => $adminUserUid]
+                );
+                return true;
+            }
+        }
+        $this->connection->insert('be_users', $adminUserFields);
+        $adminUserUid = (int)$this->connection->lastInsertId('be_users');
+        return $adminUserUid > 0;
+    }
+
+    protected function getExistingAdminUserId(string $username): int
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $result = $queryBuilder
+            ->select('uid')
+            ->from('be_users')
+            ->where(
+                $queryBuilder->expr()->eq('username', $queryBuilder->createNamedParameter($username))
+            )
+            ->execute();
+        if ($result instanceof ResultStatement) {
+            $user = $result->fetch();
+            if (is_array($user)) {
+                return (int)($user['uid'] ?? 0);
+            }
+        }
+        return 0;
     }
 }

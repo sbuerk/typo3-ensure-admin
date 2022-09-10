@@ -7,6 +7,14 @@ services:
   SBUERK\EnsureAdmin\:
     resource: '../Classes/*'
 
+  connection.adminpasswordservice.be_users:
+    class: 'TYPO3\CMS\Core\Database\Connection'
+    factory:
+      - '@TYPO3\CMS\Core\Database\ConnectionPool'
+      - 'getConnectionForTable'
+    arguments:
+      - 'be_users'
+
   hashinstance.be:
     class: 'TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface'
     factory:
@@ -19,6 +27,7 @@ services:
     public: true
     arguments:
       $hashInstance: '@hashinstance.be'
+      $connection: '@connection.adminpasswordservice.be_users'
 
   SBUERK\EnsureAdmin\Commands\AdminEnsureCommand:
     tags:

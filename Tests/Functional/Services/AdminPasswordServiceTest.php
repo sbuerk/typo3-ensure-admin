@@ -35,7 +35,7 @@ class AdminPasswordServiceTest extends FunctionalTestCase
     public function canBeCreated(): void
     {
         $adminPasswordService = $this->getContainer()->get(AdminPasswordService::class);
-        self::assertInstanceOf(AdminPasswordService::class, $adminPasswordService);
+        self::assertInstanceOf(AdminPasswordService::class, $adminPasswordService); // @phpstan-ignore-line
     }
 
     /**

@@ -63,7 +63,7 @@ class PasswordEncodeCommand extends Command
         if ($asJson) {
             $io->writeln((string)\json_encode(['success' => true, 'password' => $hashedPassword, 'message' => $message]));
         } else {
-            $io->error($message);
+            $io->success($message);
         }
         return 0;
     }

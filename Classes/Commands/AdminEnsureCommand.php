@@ -17,12 +17,24 @@ declare(strict_types=1);
 
 namespace SBUERK\EnsureAdmin\Commands;
 
+use SBUERK\EnsureAdmin\Services\AdminPasswordService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AdminEnsureCommand extends Command
 {
+    /**
+     * @var AdminPasswordService
+     */
+    protected $adminPasswordService;
+
+    public function __construct(AdminPasswordService $adminPasswordService)
+    {
+        $this->adminPasswordService = $adminPasswordService;
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
     }

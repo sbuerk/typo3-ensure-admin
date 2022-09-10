@@ -1,0 +1,46 @@
+{
+    "name": "sbuerk/typo3-ensure-admin",
+    "description": "Provides a TYPO3 cli command to create or update admin user",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Stefan Bürk",
+            "email": "stefan@buerk.tech",
+            "role": "Maintainer"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "typo3/cms-composer-installers": true,
+            "typo3/class-alias-loader": true
+        },
+        "sort-packages": true,
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "require": {
+        "php": "^7.2 || ^7.3 || ^7.4"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "SBUERK\\EnsureAdmin\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SBUERK\\EnsureAdmin\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.x-dev"
+        },
+        "typo3/cms": {
+            "app-dir": ".Build",
+            "web-dir": ".Build/Web",
+            "extension-key": "ensureadmin"
+        }
+    }
+}

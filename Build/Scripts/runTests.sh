@@ -74,9 +74,29 @@ Options:
             - cgl: cgl test and fix all php files
             - clean: clean up build and testing related files
             - composerUpdate: "composer update", handy if host has no PHP
+            - functional: functional tests
             - lint: PHP linting
             - phpstan: phpstan analyze
             - phpstanGenerateBaseline: regenerate phpstan baseline, handy after phpstan updates
+            - unit: PHP unit tests
+
+    -a <mysqli|pdo_mysql>
+        Only with -s acceptance,functional
+        Specifies to use another driver, following combinations are available:
+            - mysql
+                - mysqli (default)
+                - pdo_mysql
+            - mariadb
+                - mysqli (default)
+                - pdo_mysql
+
+    -d <sqlite|mariadb|mysql|postgres>
+        Only with -s acceptance,functional
+        Specifies on which DBMS tests are performed
+            - sqlite: (default) use sqlite
+            - mariadb: use mariadb
+            - mysql: use mysql
+            - postgres: use postgres
 
     -p <7.2|7.3|7.4>
         Specifies the PHP minor version to be used
@@ -88,6 +108,18 @@ Options:
         Only with -s composerUpdate
         Specifies the TYPO3 core major version to be used
             - 10 (default): use TYPO3 core v10
+
+    -e "<phpunit or codeception options>"
+        Only with -s acceptance|functional|unit
+        Additional options to send to phpunit (unit & functional tests) or codeception (acceptance
+        tests). For phpunit, options starting with "--" must be added after options starting with "-".
+        Example -e "-v --filter canRetrieveValueWithGP" to enable verbose output AND filter tests
+        named "canRetrieveValueWithGP"
+    -x
+        Only with -s functional|unit|acceptance
+        Send information to host instance for test or system under test break points. This is especially
+        useful if a local PhpStorm instance is listening on default xdebug port 9003. A different port
+        can be selected with -y
 
     -n
         Only with -s cgl
@@ -152,6 +184,12 @@ while getopts ":s:a:d:p:t:e:xnhuv" OPT; do
         s)
             TEST_SUITE=${OPTARG}
             ;;
+        a)
+            DATABASE_DRIVER=${OPTARG}
+            ;;
+        d)
+            DBMS=${OPTARG}
+            ;;
         p)
             PHP_VERSION=${OPTARG}
             if ! [[ ${PHP_VERSION} =~ ^(7.2|7.3|7.4)$ ]]; then
@@ -163,6 +201,12 @@ while getopts ":s:a:d:p:t:e:xnhuv" OPT; do
             if ! [[ ${TYPO3_VERSION} =~ ^(10)$ ]]; then
                 INVALID_OPTIONS+=("p ${OPTARG}")
             fi
+            ;;
+        e)
+            EXTRA_TEST_OPTIONS=${OPTARG}
+            ;;
+        x)
+            PHP_XDEBUG_ON=1
             ;;
         h)
             echo "${HELP}"
@@ -243,6 +287,41 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         docker-compose down
         ;;
+    functional)
+        handleDbmsAndDriverOptions
+        setUpDockerComposeDotEnv
+        case ${DBMS} in
+            mariadb)
+                echo "Using driver: ${DATABASE_DRIVER}"
+                docker-compose run functional_mariadb10
+                SUITE_EXIT_CODE=$?
+                ;;
+            mysql)
+                echo "Using driver: ${DATABASE_DRIVER}"
+                docker-compose run functional_mysql57
+                SUITE_EXIT_CODE=$?
+                ;;
+            postgres)
+                docker-compose run functional_postgres10
+                SUITE_EXIT_CODE=$?
+                ;;
+            sqlite)
+                # sqlite has a tmpfs as Web/typo3temp/var/tests/functional-sqlite-dbs/
+                # Since docker is executed as root (yay!), the path to this dir is owned by
+                # root if docker creates it. Thank you, docker. We create the path beforehand
+                # to avoid permission issues.
+                mkdir -p ${ROOT_DIR}/Web/typo3temp/var/tests/functional-sqlite-dbs/
+                docker-compose run functional_sqlite
+                SUITE_EXIT_CODE=$?
+                ;;
+            *)
+                echo "Invalid -d option argument ${DBMS}" >&2
+                echo >&2
+                echo "${HELP}" >&2
+                exit 1
+        esac
+        docker-compose down
+        ;;
     lint)
         setUpDockerComposeDotEnv
         docker-compose run lint
@@ -258,6 +337,12 @@ case ${TEST_SUITE} in
     phpstanGenerateBaseline)
         setUpDockerComposeDotEnv
         docker-compose run phpstan_generate_baseline
+        SUITE_EXIT_CODE=$?
+        docker-compose down
+        ;;
+    unit)
+        setUpDockerComposeDotEnv
+        docker-compose run unit
         SUITE_EXIT_CODE=$?
         docker-compose down
         ;;

@@ -75,6 +75,8 @@ Options:
             - clean: clean up build and testing related files
             - composerUpdate: "composer update", handy if host has no PHP
             - lint: PHP linting
+            - phpstan: phpstan analyze
+            - phpstanGenerateBaseline: regenerate phpstan baseline, handy after phpstan updates
 
     -p <7.2|7.3|7.4>
         Specifies the PHP minor version to be used
@@ -244,6 +246,18 @@ case ${TEST_SUITE} in
     lint)
         setUpDockerComposeDotEnv
         docker-compose run lint
+        SUITE_EXIT_CODE=$?
+        docker-compose down
+        ;;
+    phpstan)
+        setUpDockerComposeDotEnv
+        docker-compose run phpstan
+        SUITE_EXIT_CODE=$?
+        docker-compose down
+        ;;
+    phpstanGenerateBaseline)
+        setUpDockerComposeDotEnv
+        docker-compose run phpstan_generate_baseline
         SUITE_EXIT_CODE=$?
         docker-compose down
         ;;

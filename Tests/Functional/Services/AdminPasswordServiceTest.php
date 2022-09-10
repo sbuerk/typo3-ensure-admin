@@ -46,6 +46,7 @@ class AdminPasswordServiceTest extends FunctionalTestCase
         $plainPassword = 'some-plain-password';
         $validPasswordHash = '$argon2i$v=19$m=65536,t=16,p=1$Um9jLjJPdnAwVFFua2RINQ$WUw1QbLWxi5cXm6ylZrM+RH/Gz0BFoZEASKqf0Cz604';
 
+        /** @var AdminPasswordService $adminPasswordService */
         $adminPasswordService = $this->getContainer()->get(AdminPasswordService::class);
         $hashedPassword = $adminPasswordService->getHashedPassword($plainPassword);
 

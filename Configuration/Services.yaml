@@ -19,3 +19,17 @@ services:
     public: true
     arguments:
       $hashInstance: '@hashinstance.be'
+
+  SBUERK\EnsureAdmin\Commands\AdminEnsureCommand:
+    tags:
+      - name: 'console.command'
+        command: 'sbuerk:admin:ensure'
+        description: 'Create or update an admin user'
+        schedulable: false
+
+  SBUERK\EnsureAdmin\Commands\PasswordEncodeCommand:
+    tags:
+      - name: 'console.command'
+        command: 'sbuerk:password:encode'
+        description: 'Takes a plain password and returns the password hash. Can be used as install tool password.'
+        schedulable: false

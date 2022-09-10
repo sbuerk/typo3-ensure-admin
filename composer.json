@@ -43,6 +43,9 @@
         }
     },
     "scripts": {
+        "post-autoload-dump": [
+            "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+        ],
         "cgl:check": [
             "@php -dxdebug.mode=off .Build/bin/php-cs-fixer fix --config=.Build/vendor/typo3/coding-standards/templates/extension_php-cs-fixer.dist.php --dry-run --diff --using-cache=no"
         ],

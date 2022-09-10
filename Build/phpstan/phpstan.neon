@@ -1,0 +1,18 @@
+includes:
+  - ../../.Build/vendor/phpstan/phpstan-strict-rules/rules.neon
+  - ../../.Build/vendor/phpstan/phpstan-phpunit/extension.neon
+  - phpstan-baseline.neon
+
+parameters:
+  # Use local .cache dir instead of /tmp
+  tmpDir: ../../.cache/phpstan
+
+  level: max
+
+  paths:
+    - ../../Classes/
+    - ../../Tests/
+
+  strictRules:
+    # @todo Recheck disabled useless cast rule from time to time, if reportings are still unsafe to remove.
+    # uselessCast: false

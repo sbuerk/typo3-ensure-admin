@@ -7,3 +7,15 @@ services:
   SBUERK\EnsureAdmin\:
     resource: '../Classes/*'
 
+  hashinstance.be:
+    class: 'TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface'
+    factory:
+      - '@TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory'
+      - 'getDefaultHashInstance'
+    arguments:
+      - 'BE'
+
+  SBUERK\EnsureAdmin\Services\AdminPasswordService:
+    public: true
+    arguments:
+      $hashInstance: '@hashinstance.be'

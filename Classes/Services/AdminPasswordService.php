@@ -80,6 +80,7 @@ class AdminPasswordService
             'crdate' => $GLOBALS['EXEC_TIME'],
             'disable' => 0,
             'deleted' => 0,
+            'realName' => trim($firstname . ' ' . $lastname, ' '),
         ];
         if ($this->adminExists($username)) {
             if (!$force) {

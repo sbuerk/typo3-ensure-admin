@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace SBUERK\EnsureAdmin\Services;
 
 use Doctrine\DBAL\Driver\ResultStatement;
+use SBUERK\EnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
@@ -83,10 +84,10 @@ class AdminPasswordService
             'realName' => trim($firstname . ' ' . $lastname, ' '),
         ];
         if ($this->adminExists($username)) {
-            if (!$force) {
-                throw new \InvalidArgumentException('Cannot updated existing admin. You can enforce updating with --force.', 1662854882);
-            }
             $adminUserUid = $this->getExistingAdminUserId($username);
+            if (!$force) {
+                throw CanNotUpdateAdminUserWithoutForcingException::create($username, $adminUserUid);
+            }
             if ($adminUserUid > 0) {
                 $this->connection->update(
                     'be_users',

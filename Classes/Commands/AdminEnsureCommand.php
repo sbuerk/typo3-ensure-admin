@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace SBUERK\EnsureAdmin\Commands;
 
 use SBUERK\EnsureAdmin\Services\AdminPasswordService;
+use SBUERK\EnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -74,7 +75,17 @@ class AdminEnsureCommand extends Command
                 $firstname,
                 $lastname
             );
-            $this->message($io, $asJson, $createdOrUpdated, ($createdOrUpdated ? sprintf('Admin user %s created or updated', $name) : sprintf('Admin user %s failed tp create or update', $name)));
+            $this->message(
+                $io,
+                $asJson,
+                $createdOrUpdated,
+                ($createdOrUpdated ? sprintf(
+                    'Admin user %s created or updated',
+                    $name
+                ) : sprintf('Admin user %s failed tp create or update', $name))
+            );
+        } catch (CanNotUpdateAdminUserWithoutForcingException $e) {
+            $this->message($io, $asJson, false, $e->getMessage());
         } catch (\Throwable $t) {
             $this->message($io, $asJson, false, (string)$t);
             return 1;

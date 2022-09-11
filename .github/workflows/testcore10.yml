@@ -1,0 +1,13 @@
+name: tests core 10
+
+on:
+  push:
+
+jobs:
+  testsuite:
+    name: all tests with core 10
+    runs-on: ubuntu-20.04
+    steps:
+      - name: dummy
+        run: echo 'disabled on branches not supporting this anymore'
+

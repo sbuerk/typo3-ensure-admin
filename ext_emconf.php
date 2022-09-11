@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF['sbuerk_ensureadmin'] = [
+$EM_CONF['cli_ensure_admin'] = [
     'title' => 'TYPO3 Ensure Admin User',
     'description' => 'Provides a TYPO3 cli command to create or update admin user',
     'category' => 'misc',

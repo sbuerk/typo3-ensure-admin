@@ -103,6 +103,8 @@ class AdminPasswordService
     protected function getExistingAdminUserId(string $username): int
     {
         $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $result = $queryBuilder
             ->select('uid')
             ->from('be_users')

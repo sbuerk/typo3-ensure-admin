@@ -2,6 +2,12 @@ name: tests core 10
 
 on:
   push:
+    branch:
+      - "1"
+
+# Really GitHub ? We need to keep this outdated workflow file, so we can have available to select in
+# the action pane - and furthermore to show a corresponing badge. Even if core v10 test are only done
+# on split-branches.
 
 jobs:
   testsuite:

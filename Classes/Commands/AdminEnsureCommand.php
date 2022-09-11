@@ -55,11 +55,11 @@ class AdminEnsureCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $asJson = (bool)($input->getOption('json'));
         $force = (bool)($input->getOption('force'));
-        $name = $this->determineOptionValue($input, $output, 'TYPO3_ENSUREADMIN_USERNAME', 'name');
-        $email = mb_strtolower($this->determineOptionValue($input, $output, 'TYPO3_ENSUREADMIN_EMAIL', 'email'));
-        $password = $this->determineOptionValue($input, $output, 'TYPO3_ENSUREADMIN_PASSWORD', 'password');
-        $firstname = $this->determineOptionValue($input, $output, 'TYPO3_ENSUREADMIN_FIRSTNAME', 'firstname');
-        $lastname = $this->determineOptionValue($input, $output, 'TYPO3_ENSUREADMIN_LASTNAME', 'lastame');
+        $name = $this->determineOptionValue($input, 'TYPO3_ENSUREADMIN_USERNAME', 'name');
+        $email = mb_strtolower($this->determineOptionValue($input, 'TYPO3_ENSUREADMIN_EMAIL', 'email'));
+        $password = $this->determineOptionValue($input, 'TYPO3_ENSUREADMIN_PASSWORD', 'password');
+        $firstname = $this->determineOptionValue($input, 'TYPO3_ENSUREADMIN_FIRSTNAME', 'firstname');
+        $lastname = $this->determineOptionValue($input, 'TYPO3_ENSUREADMIN_LASTNAME', 'lastame');
 
         if (!$this->validateOptions($io, $force, $asJson, $name, $email, $password, $firstname, $lastname)) {
             return 1;
@@ -134,12 +134,11 @@ class AdminEnsureCommand extends Command
 
     /**
      * @param InputInterface $input
-     * @param OutputInterface $output
      * @param non-empty-string $envName
      * @param non-empty-string $optionName
      * @return string
      */
-    protected function determineOptionValue(InputInterface $input, OutputInterface $output, string $envName, string $optionName): string
+    protected function determineOptionValue(InputInterface $input, string $envName, string $optionName): string
     {
         $value = (string)getenv($envName);
         if ($input->hasOption($optionName)) {

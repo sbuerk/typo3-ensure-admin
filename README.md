@@ -179,10 +179,10 @@ used as TER upload comment.
 $ Build/Scripts/runTests.sh -s clean
 $ Build/Scripts/runTests.sh -s composerUpdate
 $ composer req --dev typo3/tailor
-$ .Build/bin/tailor set-version 1.0.1 --no-docs
+$ .Build/bin/tailor set-version 1.0.2 --no-docs
 $ composer rem --dev typo3/tailor
-$ git commit -am "[RELEASE] 1.0.1 First commit to TER"
-$ git tag 1.0.1
+$ git commit -am "[RELEASE] 1.0.2 Add missing extension icon"
+$ git tag 1.0.2
 $ git push
 $ git push --tags
 ```

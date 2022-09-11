@@ -180,7 +180,7 @@ $ Build/Scripts/runTests.sh -s composerUpdate
 $ composer req --dev typo3/tailor
 $ .Build/bin/tailor set-version 1.0.1 --no-docs
 $ composer rem --dev typo3/tailor
-$ git commit -am "[RELEASE] 1.0.1 Added some basic inline foreign field related checks"
+$ git commit -am "[RELEASE] 1.0.1 First commit to TER"
 $ git tag 1.0.1
 $ git push
 $ git push --tags

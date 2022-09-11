@@ -4,7 +4,7 @@ services:
     autoconfigure: true
     public: false
 
-  SBUERK\EnsureAdmin\:
+  SBUERK\CliEnsureAdmin\:
     resource: '../Classes/*'
 
   connection.adminpasswordservice.be_users:
@@ -23,20 +23,20 @@ services:
     arguments:
       - 'BE'
 
-  SBUERK\EnsureAdmin\Services\AdminPasswordService:
+  SBUERK\CliEnsureAdmin\Services\AdminPasswordService:
     public: true
     arguments:
       $hashInstance: '@hashinstance.be'
       $connection: '@connection.adminpasswordservice.be_users'
 
-  SBUERK\EnsureAdmin\Commands\AdminEnsureCommand:
+  SBUERK\CliEnsureAdmin\Commands\AdminEnsureCommand:
     tags:
       - name: 'console.command'
         command: 'sbuerk:admin:ensure'
         description: 'Create or update an admin user'
         schedulable: false
 
-  SBUERK\EnsureAdmin\Commands\PasswordEncodeCommand:
+  SBUERK\CliEnsureAdmin\Commands\PasswordEncodeCommand:
     tags:
       - name: 'console.command'
         command: 'sbuerk:password:encode'

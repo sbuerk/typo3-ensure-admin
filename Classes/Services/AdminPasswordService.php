@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace SBUERK\EnsureAdmin\Services;
+namespace SBUERK\CliEnsureAdmin\Services;
 
 use Doctrine\DBAL\Driver\ResultStatement;
-use SBUERK\EnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
+use SBUERK\CliEnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;

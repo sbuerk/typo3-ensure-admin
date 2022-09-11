@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace SBUERK\EnsureAdmin\Tests\Unit\Services\Exceptions;
+namespace SBUERK\CliEnsureAdmin\Tests\Unit\Services\Exceptions;
 
-use SBUERK\EnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
+use SBUERK\CliEnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class CanNotUpdateAdminUserWithoutForcingExceptionTest extends UnitTestCase

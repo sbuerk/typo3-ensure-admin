@@ -1,0 +1,6 @@
+"be_users",,,,,,,,,,
+,"uid","pid","username","password","usergroup","deleted","admin","options","disable","deleted","realName","email"
+,1,0,"admin","",,0,1,0,0,0,"",""
+,2,0,"test_disabled","",,0,1,0,1,0,"",""
+,3,0,"test_deleted","",,0,1,0,0,1,"",""
+,4,0,"test_deleted","$argon2i$v=19$m=65536,t=16,p=1$Um9jLjJPdnAwVFFua2RINQ$WUw1QbLWxi5cXm6ylZrM+RH/Gz0BFoZEASKqf0Cz604",,0,1,0,0,0,"Max Mustermann","admin@example.org"

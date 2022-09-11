@@ -15,9 +15,9 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace SBUERK\EnsureAdmin\Commands;
+namespace SBUERK\CliEnsureAdmin\Commands;
 
-use SBUERK\EnsureAdmin\Services\AdminPasswordService;
+use SBUERK\CliEnsureAdmin\Services\AdminPasswordService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -36,12 +36,12 @@
     },
     "autoload": {
         "psr-4": {
-            "SBUERK\\EnsureAdmin\\": "Classes/"
+            "SBUERK\\CliEnsureAdmin\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SBUERK\\EnsureAdmin\\Tests\\": "Tests/"
+            "SBUERK\\CliEnsureAdmin\\Tests\\": "Tests/"
         }
     },
     "scripts": {

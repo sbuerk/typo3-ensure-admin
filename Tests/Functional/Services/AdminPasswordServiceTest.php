@@ -15,10 +15,10 @@ declare(strict_types=1);
  * The TYPO3 project - inspiring people to share!
  */
 
-namespace SBUERK\EnsureAdmin\Tests\Functional\Services;
+namespace SBUERK\CliEnsureAdmin\Tests\Functional\Services;
 
-use SBUERK\EnsureAdmin\Services\AdminPasswordService;
-use SBUERK\EnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
+use SBUERK\CliEnsureAdmin\Services\AdminPasswordService;
+use SBUERK\CliEnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class AdminPasswordServiceTest extends FunctionalTestCase

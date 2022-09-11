@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace SBUERK\CliEnsureAdmin\Commands;
 
 use SBUERK\CliEnsureAdmin\Services\AdminPasswordService;
+use SBUERK\CliEnsureAdmin\Services\CliOptionService;
 use SBUERK\CliEnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,9 +33,15 @@ class AdminEnsureCommand extends Command
      */
     protected $adminPasswordService;
 
-    public function __construct(AdminPasswordService $adminPasswordService)
+    /**
+     * @var CliOptionService $cliOptionService
+     */
+    protected $cliOptionService;
+
+    public function __construct(AdminPasswordService $adminPasswordService, CliOptionService $cliOptionService)
     {
         $this->adminPasswordService = $adminPasswordService;
+        $this->cliOptionService = $cliOptionService;
         parent::__construct();
     }
 
@@ -140,11 +147,6 @@ class AdminEnsureCommand extends Command
      */
     protected function determineOptionValue(InputInterface $input, string $envName, string $optionName): string
     {
-        $value = (string)getenv($envName);
-        if ($input->hasOption($optionName)) {
-            $optionValue = (string)$input->getOption($optionName); // @phpstan-ignore-line
-            $value = $optionValue !== '' ? $optionValue : $value;
-        }
-        return $value;
+        return $this->cliOptionService->determineOptionValue($input, $envName, $optionName);
     }
 }

@@ -13,6 +13,12 @@ to encode a password and use it to set the TYPO3 installtool password, for examp
 > :information_source: This extension only handles backend user compatible passwords.
 > This means, Frontend Users passwords are not handled.
 
+# Version compatibility
+
+| version | TYPO3 | PHP           |
+|---------|-------|---------------|
+| 1.x     | v10   | 7.2, 7.3, 7.4 |
+
 # Alternatives
 
 [TYPO3 Console](https://github.com/TYPO3-Console/TYPO3-Console) includes some commands, which (partly) can do which this
@@ -172,10 +178,10 @@ used as TER upload comment.
 $ Build/Scripts/runTests.sh -s clean
 $ Build/Scripts/runTests.sh -s composerUpdate
 $ composer req --dev typo3/tailor
-$ .Build/bin/tailor set-version 0.3.2
+$ .Build/bin/tailor set-version 1.0.1 --no-docs
 $ composer rem --dev typo3/tailor
-$ git commit -am "[RELEASE] 0.3.2 Added some basic inline foreign field related checks"
-$ git tag 0.3.2
+$ git commit -am "[RELEASE] 1.0.1 Added some basic inline foreign field related checks"
+$ git tag 1.0.1
 $ git push
 $ git push --tags
 ```

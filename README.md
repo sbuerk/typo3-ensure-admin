@@ -179,9 +179,9 @@ used as TER upload comment.
 $ Build/Scripts/runTests.sh -s clean
 $ Build/Scripts/runTests.sh -s composerUpdate
 $ composer req --dev typo3/tailor
-$ .Build/bin/tailor set-version 1.0.1 --no-docs
+$ .Build/bin/tailor set-version 2.0.0 --no-docs
 $ composer rem --dev typo3/tailor
-$ git commit -am "[RELEASE] 1.0.1 Added some basic inline foreign field related checks"
+$ git commit -am "[RELEASE] 2.0.0 Dropped v10 and moved to v11/v12 compatibilty"
 $ git tag 1.0.1
 $ git push
 $ git push --tags

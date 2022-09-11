@@ -15,9 +15,10 @@ to encode a password and use it to set the TYPO3 installtool password, for examp
 
 # Version compatibility
 
-| version | TYPO3 | PHP           |
-|---------|-------|---------------|
-| 1.x     | v10   | 7.2, 7.3, 7.4 |
+| version | TYPO3     | PHP                |
+|---------|-----------|--------------------|
+| 2.x     | v11 + v12 | 7.4, 8.0, 8.1, 8.2 |
+| 1.x     | v10       | 7.2, 7.3, 7.4      |
 
 # Alternatives
 

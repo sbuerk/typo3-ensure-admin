@@ -142,8 +142,9 @@ class AdminEnsureCommand extends Command
     protected function determineOptionValue(InputInterface $input, OutputInterface $output, string $envName, string $optionName): string
     {
         $value = (string)getenv($envName);
-        if ($value === '' && $input->hasOption($optionName)) {
-            $value = (string)$input->getOption($optionName); // @phpstan-ignore-line
+        if ($input->hasOption($optionName)) {
+            $optionValue = (string)$input->getOption($optionName); // @phpstan-ignore-line
+            $value = $optionValue !== '' ? $optionValue : $value;
         }
         return $value;
     }

@@ -1,10 +1,13 @@
-[![tests core 11](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore10.yml/badge.svg?branch=1)](https://github.com/sbuerk/typo3-ensure-admin/blob/1/.github/workflows/testcore10.yml)
-[![tests core 11](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore11.yml/badge.svg)](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore11.yml)
-[![tests core 12](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore12.yml/badge.svg)](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore12.yml)
-
-
 TYPO3 Ensure Admin
 ==================
+
+# State
+
+| Workflow      | main (2.x)                                                                                                                                                                                             | 1 (1.x)                                                                                                                                                                                                    |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| tests core 10 | -                                                                                                                                                                                                      | [![tests core 10](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore10.yml/badge.svg?branch=1)](https://github.com/sbuerk/typo3-ensure-admin/blob/1/.github/workflows/testcore10.yml) |
+| tests core 11 | [![tests core 11](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore11.yml/badge.svg?branch=main)](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore11.yml) | -                                                                                                                                                                                                          |
+| tests core 12 | [![tests core 12](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore12.yml/badge.svg?branch=main)](https://github.com/sbuerk/typo3-ensure-admin/actions/workflows/testcore12.yml) | -                                                                                                                                                                                                          |
 
 # Mission
 

@@ -1,4 +1,4 @@
-name: tests core 10
+name: tests core 12
 
 on:
   push:
@@ -8,17 +8,20 @@ on:
 
 jobs:
   testsuite:
-    name: all tests with core 10
+    name: all tests with core 12
     runs-on: ubuntu-20.04
     strategy:
+      # This prevents cancellation of matrix job runs, if one/two already failed and let the
+      # rest matrix jobs be be executed anyway.
+      fail-fast: false
       matrix:
-        php: [ '7.2', '7.3', '7.4' ]
+        php: [ '8.1', '8.2']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Install testing system
-        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t 10 -s composerUpdate
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t 12 -s composerUpdate
 
       - name: Lint PHP
         run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s lint

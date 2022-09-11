@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace SBUERK\CliEnsureAdmin\Services;
 
-use Doctrine\DBAL\Driver\ResultStatement;
 use SBUERK\CliEnsureAdmin\Services\Exceptions\CanNotUpdateAdminUserWithoutForcingException;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashInterface;
 use TYPO3\CMS\Core\Database\Connection;
@@ -57,17 +56,21 @@ class AdminPasswordService
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->getRestrictions()->removeAll();
         $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $result = $queryBuilder
+        $count = $queryBuilder
             ->count('*')
             ->from('be_users')
             ->where(
                 $queryBuilder->expr()->eq('username', $queryBuilder->createNamedParameter($username))
             )
-            ->execute();
-        if ($result instanceof ResultStatement) {
-            return (int)$result->fetchColumn() > 0; // @phpstan-ignore-line
+            ->executeQuery()
+            ->fetchOne();
+        if (is_string($count)) {
+            $count = (int)$count;
         }
-        return $result > 0;
+        if (is_int($count)) {
+            return $count > 0;
+        }
+        return false;
     }
 
     public function ensureAdminUser(bool $force, string $username, string $password, string $email, string $firstname, string $lastname): bool
@@ -107,18 +110,18 @@ class AdminPasswordService
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->getRestrictions()->removeAll();
         $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-        $result = $queryBuilder
+        $user = $queryBuilder
             ->select('uid')
             ->from('be_users')
             ->where(
                 $queryBuilder->expr()->eq('username', $queryBuilder->createNamedParameter($username))
             )
-            ->execute();
-        if ($result instanceof ResultStatement) {
-            $user = $result->fetch();
-            if (is_array($user)) {
-                return (int)($user['uid'] ?? 0);
-            }
+            ->executeQuery()
+            ->fetchAssociative();
+        if (is_array($user)) {
+            /** @var int|string|null $value */
+            $value = $user['uid'] ?? 0;
+            return (int)$value;
         }
         return 0;
     }

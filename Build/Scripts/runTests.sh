@@ -98,11 +98,12 @@ Options:
             - mysql: use mysql
             - postgres: use postgres
 
-    -p <7.2|7.3|7.4>
+    -p <7.4|8.0|8.1|8.2>
         Specifies the PHP minor version to be used
-            - 7.2 (default): use PHP 7.2
-            - 7.3: use PHP 7.3
-            - 7.4: use PHP 7.4
+            - 7.4 (default): use PHP 7.4
+            - 8.0: use PHP 8.0
+            - 8.1: use PHP 8.1
+            - 8.2: use PHP 8.2
 
     -t <10>
         Only with -s composerUpdate
@@ -138,7 +139,7 @@ Options:
         Show this help.
 
 Examples:
-    # Run unit tests using PHP 7.2
+    # Run unit tests using PHP 7.4
     ./Build/Scripts/runTests.sh -s unit
 EOF
 
@@ -165,8 +166,8 @@ else
 fi
 TEST_SUITE=""
 DBMS="sqlite"
-PHP_VERSION="7.2"
-TYPO3_VERSION="10"
+PHP_VERSION="7.4"
+TYPO3_VERSION="11"
 PHP_XDEBUG_ON=0
 EXTRA_TEST_OPTIONS=""
 SCRIPT_VERBOSE=0
@@ -192,13 +193,13 @@ while getopts ":s:a:d:p:t:e:xnhuv" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(7.2|7.3|7.4)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(7.4|8.0|8.1|8.2)$ ]]; then
                 INVALID_OPTIONS+=("p ${OPTARG}")
             fi
             ;;
         t)
             TYPO3_VERSION=${OPTARG}
-            if ! [[ ${TYPO3_VERSION} =~ ^(10)$ ]]; then
+            if ! [[ ${TYPO3_VERSION} =~ ^(11|12)$ ]]; then
                 INVALID_OPTIONS+=("p ${OPTARG}")
             fi
             ;;
@@ -298,7 +299,7 @@ case ${TEST_SUITE} in
                 ;;
             mysql)
                 echo "Using driver: ${DATABASE_DRIVER}"
-                docker-compose run functional_mysql57
+                docker-compose run functional_mysql80
                 SUITE_EXIT_CODE=$?
                 ;;
             postgres)

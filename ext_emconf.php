@@ -12,7 +12,7 @@ $EM_CONF['cli_ensure_admin'] = [
     'author_email' => 'stefan@buerk.tech',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.4.0-10.99.99',
+            'typo3' => '11.5.0-12.99.99',
         ],
         'conflicts' => [
         ],

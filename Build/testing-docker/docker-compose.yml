@@ -8,8 +8,8 @@ services:
     tmpfs:
       - /var/lib/mysql/:rw,noexec,nosuid
 
-  mysql57:
-    image: mysql:5.7
+  mysql80:
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: funcp
     tmpfs:
@@ -71,9 +71,25 @@ services:
           set -x
         fi
         php -v | grep '^PHP';
-        if [ ${TYPO3_VERSION} -eq 10 ]; then
-              composer req --dev typo3/cms-backend:^10.4 --no-update
-              composer req typo3/cms-core:^10.4 --no-update
+        if [ ${TYPO3_VERSION} -eq 11 ]; then
+              composer req --dev --no-update \
+                typo3/cms-backend:^11.5 \
+                typo3/cms-recordlist:^11.5 \
+                typo3/cms-frontend:^11.5 \
+                typo3/cms-extbase:^11.5 \
+                typo3/cms-fluid:^11.5 \
+                typo3/cms-install:^11.5
+              composer req typo3/cms-core:^11.5 --no-update
+        fi
+        if [ ${TYPO3_VERSION} -eq 12 ]; then
+              composer req --dev --no-update \
+                typo3/cms-backend:~12.0@dev \
+                typo3/cms-recordlist:~12.0@dev \
+                typo3/cms-frontend:~12.0@dev \
+                typo3/cms-extbase:~12.0@dev \
+                typo3/cms-fluid:~12.0@dev \
+                typo3/cms-install:~12.0@dev
+              composer req typo3/cms-core:~12.0@dev -W --no-update
         fi
         composer update --no-progress --no-interaction;
       "
@@ -116,11 +132,11 @@ services:
           bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
         fi
       "
-  functional_mysql57:
+  functional_mysql80:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     links:
-      - mysql57
+      - mysql80
     volumes:
       - ${ROOT_DIR}:${ROOT_DIR}
     environment:
@@ -128,7 +144,7 @@ services:
       typo3DatabaseName: func_test
       typo3DatabaseUsername: root
       typo3DatabasePassword: funcp
-      typo3DatabaseHost: mysql57
+      typo3DatabaseHost: mysql80
     working_dir: ${ROOT_DIR}/.Build
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -138,7 +154,7 @@ services:
           set -x
         fi
         echo Waiting for database start...;
-        while ! nc -z mysql57 3306; do
+        while ! nc -z mysql80 3306; do
           sleep 1;
         done;
         echo Database is up;

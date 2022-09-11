@@ -26,7 +26,7 @@ class AdminPasswordServiceTest extends FunctionalTestCase
     /**
      * @var non-empty-string[] Have styleguide loaded
      */
-    protected $testExtensionsToLoad = [
+    protected array $testExtensionsToLoad = [
         'typo3conf/ext/cli_ensure_admin',
     ];
 

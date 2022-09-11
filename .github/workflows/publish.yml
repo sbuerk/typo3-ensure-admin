@@ -1,6 +1,9 @@
 name: publish
 on:
   push:
+    branches:
+      - main
+      - 1
     tag:
 jobs:
   publish:

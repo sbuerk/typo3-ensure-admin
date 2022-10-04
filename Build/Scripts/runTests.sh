@@ -105,10 +105,11 @@ Options:
             - 8.1: use PHP 8.1
             - 8.2: use PHP 8.2
 
-    -t <10>
+    -t <11|12>
         Only with -s composerUpdate
         Specifies the TYPO3 core major version to be used
-            - 10 (default): use TYPO3 core v10
+            - 11 (default): use TYPO3 core v10
+            - 12: use TYPO3 core v12
 
     -e "<phpunit or codeception options>"
         Only with -s acceptance|functional|unit

@@ -13,7 +13,8 @@
     "config": {
         "allow-plugins": {
             "typo3/cms-composer-installers": true,
-            "typo3/class-alias-loader": true
+            "typo3/class-alias-loader": true,
+            "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
         },
         "sort-packages": true,
         "vendor-dir": ".Build/vendor",

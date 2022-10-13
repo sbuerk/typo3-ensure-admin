@@ -5,3 +5,5 @@ Build/testing-docker/.env
 composer.json.testing
 composer.lock
 
+README.pdf
+README.html

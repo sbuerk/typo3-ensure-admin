@@ -187,10 +187,10 @@ used as TER upload comment.
 $ Build/Scripts/runTests.sh -s clean
 $ Build/Scripts/runTests.sh -s composerUpdate
 $ composer req --dev typo3/tailor
-$ .Build/bin/tailor set-version 2.0.2 --no-docs
+$ .Build/bin/tailor set-version 2.0.3 --no-docs
 $ composer rem --dev typo3/tailor
-$ git commit -am "[RELEASE] 2.0.2 Moved to TYPO3 v11/v12 only support and TER compatibility"
-$ git tag 2.0.2
+$ git commit -am "[RELEASE] 2.0.3 Updated and test publish workflow"
+$ git tag 2.0.3
 $ git push
 $ git push --tags
 ```

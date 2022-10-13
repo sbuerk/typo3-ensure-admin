@@ -18,15 +18,17 @@ jobs:
           if ! [[ ${{ github.ref }} =~ ^refs/tags/[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}$ ]]; then
             exit 1
           fi
+
       - name: Get version
         id: get-version
-        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+        run: echo "version=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
 
       - name: Get comment
         id: get-comment
         run: |
           readonly local comment=$(git tag -n10 -l ${{ steps.get-version.outputs.version }} | sed "s/^[0-9.]*[ ]*//g")
-          echo ::set-output name=comment::$comment
+          echo "comment=$comment" >> $GITHUB_OUTPUT
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:

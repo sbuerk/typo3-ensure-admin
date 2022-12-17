@@ -275,7 +275,11 @@ case ${TEST_SUITE} in
         docker-compose down
         ;;
     clean)
-        rm -rf ../../composer.lock ../../.Build/ ../../Tests/Acceptance/Support/_generated/ ../../composer.json.testing
+        rm -rf ../../composer.lock \
+            ../../.Build/ \
+            ../../Tests/Acceptance/Support/_generated/ \
+            ../../composer.json.testing \
+            ../../.cache
         ;;
     composerUpdate)
         setUpDockerComposeDotEnv

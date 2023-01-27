@@ -27,8 +27,8 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0 || ^8.1",
-        "typo3/cms-core": "^11.5 || ^12.0 || 12.0.*@dev"
+        "php": "^7.4 || ^8.0 || ^8.1 || ^8.2",
+        "typo3/cms-core": "~11.5@dev || ~12.4@dev"
     },
     "require-dev": {
         "bnf/phpstan-psr-container": "^1.0.1",
@@ -36,12 +36,11 @@
         "phpstan/phpstan": "^1.8.4",
         "phpstan/phpstan-phpunit": "^1.1.1",
         "phpstan/phpstan-strict-rules": "^1.4.3",
-        "phpunit/phpunit": "^9.6.4 || ^10",
-        "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "^0.0.1",
-        "typo3/cms-backend": "^11.5 || ^12.0 || 12.0.*@dev",
-        "typo3/cms-composer-installers": "^3.0",
+        "phpunit/phpunit": "^9.6.7 || ^10.1",
+        "typo3/cms-backend": "^11.5 || ^12.3 || ~12.4@dev",
+        "typo3/cms-composer-installers": "^3 || ^5",
         "typo3/coding-standards": "^0.5.0",
-        "typo3/testing-framework": "~7.0@dev"
+        "typo3/testing-framework": "dev-7-stefan-1"
     },
     "autoload": {
         "psr-4": {

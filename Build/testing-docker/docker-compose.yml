@@ -73,27 +73,27 @@ services:
         php -v | grep '^PHP';
         if [ ${TYPO3_VERSION} -eq 11 ]; then
               composer req --dev --no-update \
-                typo3/cms-composer-installers:^3.0 \
-                typo3/cms-backend:^11.5 \
-                typo3/cms-recordlist:^11.5 \
-                typo3/cms-frontend:^11.5 \
-                typo3/cms-extbase:^11.5 \
-                typo3/cms-fluid:^11.5 \
-                typo3/cms-install:^11.5 \
-                phpunit/phpunit:^9.6.4
-              composer req typo3/cms-core:^11.5 --no-update
+                typo3/cms-composer-installers:^3 \
+                typo3/cms-backend:~11.5@dev \
+                typo3/cms-recordlist:~11.5@dev \
+                typo3/cms-frontend:~11.5@dev \
+                typo3/cms-extbase:~11.5@dev \
+                typo3/cms-fluid:~11.5@dev \
+                typo3/cms-install:~11.5@dev \
+                phpunit/phpunit:^9.6.7
+              composer req typo3/cms-core:~11.5@dev -W --no-update
         fi
         if [ ${TYPO3_VERSION} -eq 12 ]; then
               composer req --dev --no-update \
-                typo3/cms-composer-installers:^5.0 \
-                typo3/cms-backend:~12.0@dev \
-                typo3/cms-recordlist:~12.0@dev \
-                typo3/cms-frontend:~12.0@dev \
-                typo3/cms-extbase:~12.0@dev \
-                typo3/cms-fluid:~12.0@dev \
-                typo3/cms-install:~12.0@dev \
-                phpunit/phpunit:^10
-              composer req typo3/cms-core:~12.0@dev -W --no-update
+                typo3/cms-composer-installers:^5 \
+                typo3/cms-backend:~12.4@dev \
+                typo3/cms-recordlist:~12.4@dev \
+                typo3/cms-frontend:~12.4@dev \
+                typo3/cms-extbase:~12.4@dev \
+                typo3/cms-fluid:~12.4@dev \
+                typo3/cms-install:~12.4@dev \
+                phpunit/phpunit:^10.1
+              composer req typo3/cms-core:~12.4@dev -W --no-update
         fi
         composer update --no-progress --no-interaction;
       "
@@ -112,7 +112,7 @@ services:
       typo3DatabaseUsername: root
       typo3DatabasePassword: funcp
       typo3DatabaseHost: mariadb10
-    working_dir: ${ROOT_DIR}/.Build
+    working_dir: ${ROOT_DIR}/
     extra_hosts:
       - "host.docker.internal:host-gateway"
     command: >
@@ -128,12 +128,12 @@ services:
         php -v | grep '^PHP';
         if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
           XDEBUG_MODE=\"off\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
         else
           XDEBUG_MODE=\"debug,develop\" \
           XDEBUG_TRIGGER=\"foo\" \
           XDEBUG_CONFIG=\"client_host=host.docker.internal\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
         fi
       "
   functional_mysql80:
@@ -149,7 +149,7 @@ services:
       typo3DatabaseUsername: root
       typo3DatabasePassword: funcp
       typo3DatabaseHost: mysql80
-    working_dir: ${ROOT_DIR}/.Build
+    working_dir: ${ROOT_DIR}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     command: >
@@ -165,12 +165,12 @@ services:
         php -v | grep '^PHP';
         if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
           XDEBUG_MODE=\"off\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
         else
           XDEBUG_MODE=\"debug,develop\" \
           XDEBUG_TRIGGER=\"foo\" \
           XDEBUG_CONFIG=\"client_host=host.docker.internal\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
         fi
       "
   functional_postgres10:
@@ -186,7 +186,7 @@ services:
       typo3DatabaseUsername: ${HOST_USER}
       typo3DatabaseHost: postgres10
       typo3DatabasePassword: funcp
-    working_dir: ${ROOT_DIR}/.Build
+    working_dir: ${ROOT_DIR}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     command: >
@@ -202,12 +202,12 @@ services:
         php -v | grep '^PHP';
         if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
           XDEBUG_MODE=\"off\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-postgres ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-postgres ${TEST_FILE};
         else
           XDEBUG_MODE=\"debug,develop\" \
           XDEBUG_TRIGGER=\"foo\" \
           XDEBUG_CONFIG=\"client_host=host.docker.internal\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-postgres ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-postgres ${TEST_FILE};
         fi
       "
   functional_sqlite:
@@ -219,7 +219,7 @@ services:
       - ${ROOT_DIR}/Web/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
     environment:
       typo3DatabaseDriver: pdo_sqlite
-    working_dir: ${ROOT_DIR}/.Build
+    working_dir: ${ROOT_DIR}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     command: >
@@ -230,12 +230,12 @@ services:
         php -v | grep '^PHP';
         if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
           XDEBUG_MODE=\"off\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE};
         else
           XDEBUG_MODE=\"debug,develop\" \
           XDEBUG_TRIGGER=\"foo\" \
           XDEBUG_CONFIG=\"client_host=host.docker.internal\" \
-          bin/phpunit -c Web/typo3conf/ext/cli_ensure_admin/Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE};
+          .Build/bin/phpunit -c Build/phpunit/FunctionalTests${TYPO3_VERSION}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE};
         fi
       "
 

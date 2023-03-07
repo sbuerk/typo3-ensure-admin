@@ -36,6 +36,7 @@
         "phpstan/phpstan": "^1.8.4",
         "phpstan/phpstan-phpunit": "^1.1.1",
         "phpstan/phpstan-strict-rules": "^1.4.3",
+        "phpunit/phpunit": "^9.6.4 || ^10",
         "sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "^0.0.1",
         "typo3/cms-backend": "^11.5 || ^12.0 || 12.0.*@dev",
         "typo3/cms-composer-installers": "^3.0",

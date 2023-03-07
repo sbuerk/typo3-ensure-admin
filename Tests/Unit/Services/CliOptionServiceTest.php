@@ -48,7 +48,7 @@ class CliOptionServiceTest extends UnitTestCase
         parent::tearDown();
     }
 
-    public function returnsExpectedValueDataProvider(): \Generator
+    public static function returnsExpectedValueDataProvider(): \Generator
     {
         yield 'only env variable set returns env value' => [
             'envSetVars' => ['TYPO3_ENSUREADMIN_ENVVALUE' => 'env_value'],

@@ -31,7 +31,7 @@ class CanNotUpdateAdminUserWithoutForcingExceptionTest extends UnitTestCase
         self::assertSame(1662904770, $exception->getCode());
     }
 
-    public function createReturnsExpectedExceptionMessageDataProvider(): \Generator
+    public static function createReturnsExpectedExceptionMessageDataProvider(): \Generator
     {
         yield 'admin[1]' => [
             'username' => 'admin',

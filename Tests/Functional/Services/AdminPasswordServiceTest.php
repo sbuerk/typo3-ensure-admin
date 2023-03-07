@@ -62,7 +62,7 @@ class AdminPasswordServiceTest extends FunctionalTestCase
         self::assertTrue($adminPasswordService->checkPassword($plainPassword, $validPasswordHash), 'Previous password hash valid');
     }
 
-    public function adminExistsReturnsExpectedResultDataProvider(): \Generator
+    public static function adminExistsReturnsExpectedResultDataProvider(): \Generator
     {
         yield 'Normal admin user' => [
             'username' => 'admin',
@@ -93,7 +93,7 @@ class AdminPasswordServiceTest extends FunctionalTestCase
         self::assertSame($expectedResult, $exists);
     }
 
-    public function getExistingAdminUserIdReturnsValidIdDataProvider(): \Generator
+    public static function getExistingAdminUserIdReturnsValidIdDataProvider(): \Generator
     {
         yield 'admin' => [
             'username' => 'admin',
@@ -140,7 +140,7 @@ class AdminPasswordServiceTest extends FunctionalTestCase
         $adminPasswordService->ensureAdminUser(false, 'admin', $hashedPassword, 'admin@example.org', 'Max', 'Mustermann');
     }
 
-    public function ensureAdminUserWorksAsExpectedDataProvider(): \Generator
+    public static function ensureAdminUserWorksAsExpectedDataProvider(): \Generator
     {
         $hashedPassword = '$argon2i$v=19$m=65536,t=16,p=1$Um9jLjJPdnAwVFFua2RINQ$WUw1QbLWxi5cXm6ylZrM+RH/Gz0BFoZEASKqf0Cz604';
         yield 'admin updated' => [

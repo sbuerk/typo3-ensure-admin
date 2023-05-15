@@ -40,7 +40,7 @@
         "typo3/cms-backend": "^11.5 || ^12.3 || ~12.4@dev",
         "typo3/cms-composer-installers": "^3 || ^5",
         "typo3/coding-standards": "^0.5.0",
-        "typo3/testing-framework": "dev-7-stefan-1"
+        "typo3/testing-framework": "7.*.*@dev"
     },
     "autoload": {
         "psr-4": {

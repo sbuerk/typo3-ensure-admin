@@ -89,7 +89,7 @@ class AdminEnsureCommand extends Command
                 ($createdOrUpdated ? sprintf(
                     'Admin user %s created or updated',
                     $name
-                ) : sprintf('Admin user %s failed tp create or update', $name))
+                ) : sprintf('Admin user %s failed to create or update', $name))
             );
         } catch (CanNotUpdateAdminUserWithoutForcingException $e) {
             $this->message($io, $asJson, false, $e->getMessage());

@@ -2,9 +2,10 @@
 .cache/
 .idea/
 /var/
-Build/testing-docker/.env
-composer.json.testing
-composer.lock
+/Build/testing-docker/.env
+/composer.json.testing
+/composer.json.orig
+/composer.lock
 
-README.pdf
-README.html
+/README.pdf
+/README.html
